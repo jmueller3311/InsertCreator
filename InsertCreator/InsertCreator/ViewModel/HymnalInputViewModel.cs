@@ -190,7 +190,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                 if (ShowWA != value)
                 {
                     SetValue(value);
-                    Properties.Settings.Default.ShowEN = value;
+                    Properties.Settings.Default.ShowWA = value;
                 }
             }
         }
@@ -203,7 +203,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                 if (ShowRU != value)
                 {
                     SetValue(value);
-                    Properties.Settings.Default.ShowEN = value;
+                    Properties.Settings.Default.ShowRU = value;
                 }
             }
         }
@@ -216,7 +216,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                 if (ShowUA != value)
                 {
                     SetValue(value);
-                    Properties.Settings.Default.ShowEN = value;
+                    Properties.Settings.Default.ShowUA = value;
                 }
             }
         }
