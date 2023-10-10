@@ -28,6 +28,11 @@ namespace HgSoftware.InsertCreator.ViewModel
             _fadeInWriter = fadeInWriter;
             _currentHymnal = hymnalList;
             _bookname = bookname;
+
+            ShowEN = Properties.Settings.Default.ShowEN;
+            ShowWA = Properties.Settings.Default.ShowWA;
+            ShowRU = Properties.Settings.Default.ShowRU;
+            ShowUA = Properties.Settings.Default.ShowUA;
         }
 
         #endregion Public Constructors
@@ -49,6 +54,32 @@ namespace HgSoftware.InsertCreator.ViewModel
             {
                 if (_studioMode) return "Anzeigen";
                 else return "Erstellen und Anzeigen";
+            }
+        }
+
+        public string ButtonLeftInternational
+        {
+            get
+            {
+                if (_studioMode) return "International Erstellen";
+                else return "International Zurücksetzen";
+            }
+        }
+
+        public string ButtonRightInternational
+        {
+            get
+            {
+                if (_studioMode) return "International Anzeigen";
+                else return "International Erstellen und Anzeigen";
+            }
+        }
+
+        public string ResetButton
+        {
+            get
+            {
+                return "Zurücksetzen";
             }
         }
 
@@ -75,6 +106,8 @@ namespace HgSoftware.InsertCreator.ViewModel
         }
 
         public ICommand LeftButtonCommand => new RelayCommand(OnButtonLeft);
+        public ICommand ResetButtonCommand => new RelayCommand(OnButtonReset);
+        public ICommand InternationalLeftButtonCommand => new RelayCommand(OnButtonLeftInternational);
 
         public string MelodieAutor
         {
@@ -89,6 +122,7 @@ namespace HgSoftware.InsertCreator.ViewModel
         }
 
         public ICommand RightButtonCommand => new RelayCommand(OnButtonRight);
+        public ICommand InternationalRightButtonCommand => new RelayCommand(OnButtonRightInternational);
 
         public List<int> SelectedVerses
         {
@@ -112,6 +146,79 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             get { return GetValue<ObservableCollection<SelectedVerse>>(); }
             set { SetValue(value); }
+        }
+
+        public string EnNumber
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+        public string WaNumber
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+        public string RuNumber
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+        public string UaNumber
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
+        public bool ShowEN
+        {
+            get { return GetValue<bool>(); }
+            set
+            {
+                if (ShowEN != value)
+                {
+                    SetValue(value);
+                    Properties.Settings.Default.ShowEN = value;
+                }
+            }
+        }
+
+        public bool ShowWA
+        {
+            get { return GetValue<bool>(); }
+            set
+            {
+                if (ShowWA != value)
+                {
+                    SetValue(value);
+                    Properties.Settings.Default.ShowEN = value;
+                }
+            }
+        }
+
+        public bool ShowRU
+        {
+            get { return GetValue<bool>(); }
+            set
+            {
+                if (ShowRU != value)
+                {
+                    SetValue(value);
+                    Properties.Settings.Default.ShowEN = value;
+                }
+            }
+        }
+
+        public bool ShowUA
+        {
+            get { return GetValue<bool>(); }
+            set
+            {
+                if (ShowUA != value)
+                {
+                    SetValue(value);
+                    Properties.Settings.Default.ShowEN = value;
+                }
+            }
         }
 
         #endregion Public Properties
@@ -180,6 +287,23 @@ namespace HgSoftware.InsertCreator.ViewModel
             else
                 TextAutor = "";
 
+            if (current.Metadata.Exists(x => x.Key == "EN"))
+                EnNumber = $"{current.Metadata.Find(x => x.Key == "EN").Value}";
+            else
+                EnNumber = "-";
+            if (current.Metadata.Exists(x => x.Key == "WA"))
+                WaNumber = $"{current.Metadata.Find(x => x.Key == "WA").Value}";
+            else
+                WaNumber = "-";
+            if (current.Metadata.Exists(x => x.Key == "RU"))
+                RuNumber = $"{current.Metadata.Find(x => x.Key == "RU").Value}";
+            else
+                RuNumber = "-";
+            if (current.Metadata.Exists(x => x.Key == "UA"))
+                UaNumber = $"{current.Metadata.Find(x => x.Key == "UA").Value}";
+            else
+                UaNumber = "-";
+
             if (current.Metadata.Exists(x => x.Key == "Melodie"))
                 MelodieAutor = $" Melodie: {current.Metadata.Find(x => x.Key == "Melodie").Value}";
             else if
@@ -189,13 +313,17 @@ namespace HgSoftware.InsertCreator.ViewModel
                 MelodieAutor = "";
         }
 
+        private void OnButtonReset(object obj)
+        {
+            ClearView();
+        }
+
         private void OnButtonLeft(object obj)
         {
             if (_studioMode)
             {
                 var hymnal = new HymnalData(_bookname, InputNumber, InputText, MelodieAutor, TextAutor, VerseList);
                 _historyViewModel.AddToHistory(hymnal);
-                ClearView();
                 return;
             }
             _fadeInWriter.ResetFade();
@@ -212,7 +340,30 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
             _fadeInWriter.WriteFade(hymnal);
             _historyViewModel.SelectFade(hymnal);
-            ClearView();
+        }
+
+        private void OnButtonLeftInternational(object obj)
+        {
+            if (_studioMode)
+            {
+                var hymnal = new InternationalHymnalData(_bookname, InputNumber, EnNumber, WaNumber, UaNumber, RuNumber, VerseList);
+                _historyViewModel.AddToHistory(hymnal);
+                return;
+            }
+            _fadeInWriter.ResetFade();
+            _historyViewModel.SelectedIndex = -1;
+        }
+
+        private void OnButtonRightInternational(object obj)
+        {
+            var hymnal = new InternationalHymnalData(_bookname, InputNumber, EnNumber, WaNumber, UaNumber, RuNumber, VerseList);
+
+            if (!_studioMode)
+            {
+                _historyViewModel.AddToHistory(hymnal);
+            }
+            _fadeInWriter.WriteFade(hymnal);
+            _historyViewModel.SelectFade(hymnal);
         }
 
         #endregion Private Methods

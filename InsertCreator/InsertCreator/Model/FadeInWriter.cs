@@ -115,6 +115,9 @@ namespace HgSoftware.InsertCreator.Model
                 case HymnalData _:
                     return WriteHymnalFade(insert as HymnalData, greenScreen, cornerbug);
 
+                case InternationalHymnalData _:
+                    return WriteInternationalHymnalFade(insert as InternationalHymnalData, greenScreen, cornerbug);
+
                 case MinistryGridViewModel _:
                     return WriteMinistryFade(insert as MinistryGridViewModel, greenScreen, cornerbug);
 
@@ -207,6 +210,35 @@ namespace HgSoftware.InsertCreator.Model
                 hymnalData.Name,
                 _positionData.FontTextTwoRowSecondLine,
                 new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
+
+            DrawLogo(drawingTool, _positionData);
+
+            return image;
+        }
+
+        private Bitmap CreateHymnalInternationalInsertPicture(InternationalHymnalData hymnalData, bool transparent = true, bool useCornerBug = false)
+        {
+            Bitmap image = LoadFrame(transparent, useCornerBug);
+
+            var drawingTool = Graphics.FromImage(image);
+
+            DrawRectangle(drawingTool, _positionData);
+
+            string temp = "";
+            if (Properties.Settings.Default.ShowEN) temp += $"EN: {hymnalData.EN}   ";
+            if (Properties.Settings.Default.ShowWA) temp += $"WA: {hymnalData.WA}   ";
+            if (Properties.Settings.Default.ShowRU) temp += $"RU: {hymnalData.RU}   ";
+            if (Properties.Settings.Default.ShowUA) temp += $"UA: {hymnalData.UA}   ";
+
+            drawingTool.DrawString(
+             temp,
+             _positionData.FontTextTwoRowFirstLine,
+             new SolidBrush(Color.Black), _positionData.TextTwoRowFirstLinePosition);
+
+            drawingTool.DrawString(
+             $"{hymnalData.Book} {hymnalData.Number}{hymnalData.SongVerses}",
+               _positionData.FontTextTwoRowSecondLine,
+             new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
 
             DrawLogo(drawingTool, _positionData);
 
@@ -325,6 +357,11 @@ namespace HgSoftware.InsertCreator.Model
                 return CreateHymnalInsertPictureMeta(hymnalData, greenScreen, cornerbug);
             else
                 return CreateHymnalInsertPicture(hymnalData, greenScreen, cornerbug);
+        }
+
+        private Bitmap WriteInternationalHymnalFade(InternationalHymnalData data, bool greenScreen, bool cornerbug)
+        {
+            return CreateHymnalInternationalInsertPicture(data, greenScreen, cornerbug);
         }
 
         private Bitmap WriteMinistryFade(MinistryGridViewModel ministry, bool greenScreen, bool cornerbug)

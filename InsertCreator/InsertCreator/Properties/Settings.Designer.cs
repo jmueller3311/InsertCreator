@@ -22,7 +22,67 @@ namespace HgSoftware.InsertCreator.Properties {
                 return defaultInstance;
             }
         }
-        
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowEN
+        {
+            get
+            {
+                return ((bool)(this["ShowEN"]));
+            }
+            set
+            {
+                this["ShowEN"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowWA
+        {
+            get
+            {
+                return ((bool)(this["ShowWA"]));
+            }
+            set
+            {
+                this["ShowWA"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowRU
+        {
+            get
+            {
+                return ((bool)(this["ShowRU"]));
+            }
+            set
+            {
+                this["ShowRU"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowUA
+        {
+            get
+            {
+                return ((bool)(this["ShowUA"]));
+            }
+            set
+            {
+                this["ShowUA"] = value;
+            }
+        }
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]

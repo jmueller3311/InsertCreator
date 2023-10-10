@@ -116,6 +116,7 @@
     <Compile Include="Model\BiblewordPositionData.cs" />
     <Compile Include="Model\CustomInsert.cs" />
     <Compile Include="Model\IInsertData.cs" />
+    <Compile Include="Model\InternationalHymnalData.cs" />
     <Compile Include="Model\IPositionData.cs" />
     <Compile Include="Model\PositionJsonReaderWriter.cs" />
     <Compile Include="Model\CustomInsertJasonReaderWriter.cs" />
@@ -242,9 +243,13 @@
     <None Include="DataSource\CB_Data.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="DataSource\GB_Data - orig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="DataSource\GB_Data.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="DataSource\International_GD.csv" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -261,6 +266,7 @@
     <None Include="DataSource\InsertFrameTrans.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="DataSource\integrate_international.py" />
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
